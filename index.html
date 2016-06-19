@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Refugee Register - Camera Prototype</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+  <!-- https://github.com/jhuckaby/webcamjs -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="row">
+    <div class="columns small-12 small-centered">
+      <h2>Refugee Register</h2>
+    </div>
+  </div>
+    <div class="row">
+      <div class="columns small-12 small-centered">
+        <div id="camera"></div>
+        
+        <!-- First, include the Webcam.js JavaScript Library -->
+        <script type="text/javascript" src="../webcam.js"></script>
+        
+        <!-- Configure a few settings and attach camera -->
+        <script language="JavaScript">
+          Webcam.set({
+            // live preview size
+            width: 480,
+            height: 360,
+            
+            // device capture size
+            dest_width:  480,
+            dest_height: 360,
+            
+            // final cropped size
+            crop_width:320,
+            crop_height:320,
+            
+            // format and quality
+            image_format: 'jpeg',
+            jpeg_quality: 90
+          });
+          
+          Webcam.attach( '#camera' );
+          var frozen = false;
+        </script>
+        
+        <!-- A button for taking snaps -->
+        <!-- <form class="text-center"> -->
+        <form class="text-center">
+          <!-- <input type=button value="Take Large Snapshot" onClick="take_snapshot()"> -->
+          <input type="button" value="Take Photo" onClick="toggle_cam();" class="button large rounded" id="photo-button">
+        </form>
+        
+        <!-- Code to handle taking the snapshot and displaying it locally -->
+        <script language="JavaScript">
+          function take_snapshot() {
+            // take snapshot and get image data
+            Webcam.snap( function(data_uri) {
+              // display results in page
+              document.getElementById('results').innerHTML = 
+                '<h2>Here is your large image:</h2>' + 
+                '<img src="'+data_uri+'"/>';
+            } );
+          }
+          function toggle_cam() {
+
+            if (!frozen) {
+              Webcam.freeze();
+              document.getElementById('photo-button').value = 'Retake Photo';
+            }
+
+            else if (frozen) {
+              Webcam.unfreeze();
+              document.getElementById('photo-button').value = 'Take Photo';
+            }
+
+            frozen = !frozen;
+          }
+
+        </script>
+      </div>
+    </div>
+    <div class="row text-left">
+      <div class="columns small-8">
+        <form action="">
+          <label for="">Full Name</label>
+          <input type="text">
+          <label for="">Preferred Name</label>
+          <input type="text">
+          <label for="">Date of Birth</label>
+          <input type="date">
+        </form>
+      </div>
+    </div>
+    <div class="row text-center">
+      <a href="#" class="button submit">SUBMIT</a>
+    </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.js"></script>
+</body>
+</html>

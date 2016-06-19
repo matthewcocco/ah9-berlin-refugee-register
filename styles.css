@@ -1,0 +1,21 @@
+ /* styles.css */
+
+html, body, h1, input
+{
+  font-family:'Roboto', sans-serif !important;
+}
+
+#photo-button
+{
+  margin-left: 101px;
+}
+
+.submit
+{
+  margin-left:30px;
+}
+
+input[type=text]
+{
+  width:100%;
+}
